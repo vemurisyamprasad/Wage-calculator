@@ -1,0 +1,270 @@
+/* Global Reset and Variables */
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --green-color: #27ae60;
+    --brown-color: #a04000;
+    --bg-color: #f4f7f6;
+    --card-bg: rgba(255, 255, 255, 0.98);
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    position: relative; /* Needed for watermark positioning */
+}
+
+/* --- WATERMARK SETUP --- */
+/*body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vh;
+    /* Ensure you have 'logo.png' in the 'assets' folder */
+    background-image: url('assets/logo.png'); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.1; /* Adjust transparency here */
+    z-index: 99;  /* Sits on top of the calculator */
+    pointer-events: none; /* Allows clicking through the image */
+}*/
+
+/* Main Container */
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1; /* Ensures container content is below watermark if needed, or modify z-index of watermark */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+}
+
+/* Layout Grid */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Give more space to the input table */
+    gap: 2rem;
+}
+
+/* --- TABLE STYLING (The New Layout) --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    background-color: white;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+/* First Column Headers */
+.col-header {
+    font-weight: 700;
+    text-align: left;
+    width: 30%; /* Fixed width for the first column */
+    background-color: #fcfcfc;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+/* Colors for specific sections */
+.text-green {
+    color: var(--green-color);
+}
+
+.text-brown {
+    color: var(--brown-color);
+}
+
+/* Input Row Layout (Label + Input Box) */
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-row label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex: 1; /* Label takes available space */
+    text-align: left;
+}
+
+.input-row input {
+    width: 140px; /* Fixed width for inputs for alignment */
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-align: right; /* Numbers align to right */
+    transition: all 0.3s;
+}
+
+.input-row input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Specific Highlight for Green Inputs */
+.input-green {
+    border: 2px solid var(--green-color) !important;
+    background-color: #f0fcf6;
+}
+
+.input-green:focus {
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+}
+
+/* Button Styling */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+button {
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-calc {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-calc:hover {
+    background-color: #2980b9;
+}
+
+.btn-reset {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-reset:hover {
+    background-color: #7f8c8d;
+}
+
+/* Output Section Styling */
+.output-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    height: fit-content;
+}
+
+.output-section h3 {
+    color: var(--primary-color);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-box {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; /* Stack label and value on small screens if needed */
+    gap: 5px;
+}
+
+.result-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.result-value {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    align-self: flex-end; /* Align numbers to right */
+}
+
+/* Highlight specific results */
+.result-box.highlight {
+    background-color: #e8f6f3;
+    border-left: 5px solid var(--green-color);
+}
+
+.result-box.highlight .result-value {
+    color: var(--green-color);
+}
+
+.status-indicator {
+    padding: 2px 10px;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .calculator-grid {
+        grid-template-columns: 1fr; /* Stack columns on tablet/mobile */
+    }
+
+    .col-header {
+        width: 100px; /* Shrink header column on mobile */
+        font-size: 0.8rem;
+    }
+    
+    .input-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .input-row input {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
