@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wages & ESIC Calculator</title>
+    <!-- Link to external style.css -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Inline styles to guarantee Layout and Colors -->
+    <style>
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: white; }
+        td { border: 1px solid #999; padding: 12px; vertical-align: middle; }
+        
+        /* The First Column (Headers) */
+        .col-header { 
+            font-weight: bold; 
+            text-align: left; 
+            width: 30%; 
+            background-color: #fdfdfd;
+        }
+
+        /* Specific Colors */
+        .text-green { color: #27ae60; } 
+        .text-brown { color: #a04000; } 
+
+        /* Input Row Styling */
+        .input-row { display: flex; justify-content: space-between; align-items: center; }
+        .input-row label { font-weight: 500; font-size: 0.9rem; margin-right: 10px; }
+        .input-row input { 
+            width: 120px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; 
+        }
+
+        /* Highlight Green Inputs */
+        .input-green input { border: 2px solid #27ae60; background-color: #f0fcf6; }
+
+        /* Watermark Logic */
+        /*body { position: relative; min-height: 100vh; }
+        body::before {
+            content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80vw; height: 80vh;
+            background-image: url('assets/logo.png'); 
+            background-position: center; background-repeat: no-repeat; background-size: contain;
+            opacity: 0.1; z-index: 99; pointer-events: none;
+        }*/
+
+        /* Top Right Signature Styling */
+        .header-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .signature {
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align: right;
+            font-weight: bold;
+            /* Changed to a professional Serif font stack for an 'Official' look */
+            font-family: 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+            font-style: italic; 
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        .sig-name { color: #800000; } /* Maroon */
+        .sig-title { color: #3498db; } /* Light Blue */
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header Container with Relative Positioning for Signature -->
+        <div class="header-container">
+            <header>
+                <h1>Wages Calculator</h1>
+                <p>Enter salary details below to calculate ESIC eligibility.</p>
+            </header>
+            
+            <!-- Signature Block -->
+            <div class="signature">
+                <div class="sig-name">- Sole user discretion</div>
+                <div class="sig-title"> as per Section 2(88)of CoSS </div>
+            </div>
+        </div>
+
+        <div class="calculator-grid">
+            
+            <!-- LEFT SIDE: INPUT TABLE -->
+            <div class="input-section">
+                <form id="wagesForm">
+                    
+                    <!-- TABLE STRUCTURE -->
+                    <table>
+                        <!-- ROW 1: INCLUSIVE COMPONENTS (Green) -->
+                        <tr>
+                            <!-- First Column: Spans 4 rows -->
+                            <td rowspan="4" class="col-header text-green">
+                                INCLUSIVE COMPONENTS
+                            </td>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-green">BASIC</label>
+                                    <input type="number" id="basicPay" class="input-green" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-green">DA</label>
+                                    <input type="number" id="da" class="input-green" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-green">RETAINING ALLOWANCE</label>
+                                    <input type="number" id="retention" class="input-green" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-green">ALLOWANCES (OTHER THAN EXCLUSIVE COMPONENTS)</label>
+                                    <input type="number" id="inclusive" class="input-green" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- ROW 2: EXCLUSIVE COMPONENTS (Brown) -->
+                        <tr>
+                            <!-- First Column: Spans 9 rows now -->
+                            <td rowspan="9" class="col-header text-brown">
+                                EXCLUSIVE COMPONENTS
+                            </td>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">HRA</label>
+                                    <input type="number" id="hra" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">CONVEYANCE ALLOWANCE</label>
+                                    <input type="number" id="conveyance" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">OVERTIME ALLOWANCE</label>
+                                    <input type="number" id="overtime" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Bonus -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">BONUS</label>
+                                    <input type="number" id="bonus" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Washing -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">DEFRAYAL SPL. EXPENSES (WASHING ALLOWANCE ETC) BY NATURE OF DUTY ONLY</label>
+                                    <input type="number" id="washing" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Employer EPF -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">EMPLOYER'S CONTRIBUTION FOR EPF</label>
+                                    <input type="number" id="epf" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Commission -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">COMMISSION</label>
+                                    <input type="number" id="commission" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Value of House -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">VALUE OF HOUSE ACCOMODATION ETC.,</label>
+                                    <input type="number" id="houseValue" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Settlement -->
+                        <tr>
+                            <td>
+                                <div class="input-row">
+                                    <label class="text-brown">SETTLEMENT AMOUNT OR COURT AWARD AMT.</label>
+                                    <input type="number" id="settlement" placeholder="0" min="0" step="0.01">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Action Buttons -->
+                    <div class="button-group">
+                        <button type="button" class="btn-calc" onclick="calculateWages()">Calculate Wages</button>
+                        <button type="reset" class="btn-reset" onclick="resetForm()">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT SIDE: OUTPUTS -->
+            <div class="output-section">
+                <h3>Calculation Results</h3>
+                
+                <div class="result-box">
+                    <span class="result-label">1. Total Gross Salary</span>
+                    <span class="result-value" id="outTotalGross">0.00</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-label">2. Coverable under ESIC?</span>
+                    <span class="result-value status-indicator" id="outCoverable">-</span>
+                </div>
+
+                <div class="result-box">
+                    <span class="result-label">3. Wages for ESI Contribution</span>
+                    <span class="result-value" id="outWagesESI">0.00</span>
+                </div>
+
+                <div class="result-box highlight">
+                    <span class="result-label">4. Employee Contribution (@0.75%)</span>
+                    <span class="result-value" id="outContribution">0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
